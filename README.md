@@ -2,10 +2,10 @@
 
 ## Reference
 
-https://docs.djangoproject.com/en/4.1/topics/http/sessions/
-https://apirobot.me/posts/tale-about-redis-and-sessions-in-django
-https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/ebextensions-optionsettings.html
-https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create-deploy-python-django.html
+- https://docs.djangoproject.com/en/4.1/topics/http/sessions/
+- https://apirobot.me/posts/tale-about-redis-and-sessions-in-django
+- https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/ebextensions-optionsettings.html
+- https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create-deploy-python-django.html
 
 ## Setup environment
 ```
