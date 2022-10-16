@@ -26,3 +26,16 @@ python manage.py runserver
 # (local) run django via container
 docker run -p 8000:8000 --net my-net --name my-django --env-file ./env.list -d cloudacode/django:v0.1.3
 ```
+
+## Deploy to ElasticBeanstalk
+
+https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create-deploy-python-django.html
+
+```
+# Set platform as python3.7
+# https://stackoverflow.com/questions/66380006/django-deterministic-true-requires-sqlite-3-8-3-or-higher-upon-running-python#answer-70408040
+eb init -p python-3.7 django-session
+
+# Deploy elasticbeanstalk
+eb create django-env -r ap-northeast-2 --vpc.id <vpc-id> --vpc.elbsubnets <subnet-01,subnet-02> --vpc.ec2subnets <subnet-01,subnet-02> --vpc.publicip --vpc.elbpublic
+```

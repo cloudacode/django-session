@@ -10,10 +10,10 @@ from http import cookies
 def index(request):
     color_list = ['blue', 'red', 'white', 'purple', 'orange', 'brown', 'black', 'green']
 
-    val = request.META['HTTP_COOKIE']
-    cookie_data = cookies.SimpleCookie()
-    cookie_data.load(val)
-    print(cookie_data)
+    # val = request.META['HTTP_COOKIE']
+    # cookie_data = cookies.SimpleCookie()
+    # cookie_data.load(val)
+    # print(cookie_data)
 
     if not request.session.get('color'):
         color = random.choice(color_list)

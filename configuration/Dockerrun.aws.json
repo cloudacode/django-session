@@ -1,0 +1,11 @@
+{
+    "AWSEBDockerrunVersion": "1",
+    "Image": {
+        "Name": "cloudacode/django:v0.1.3"
+    },
+    "Ports": [
+        {
+            "ContainerPort": "8000"
+        }
+    ]
+}
