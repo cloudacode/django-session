@@ -1,0 +1,5 @@
+.venv
+*.md
+env.list
+Dockerrun.aws.json
+**/*.pyc
