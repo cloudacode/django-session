@@ -4,6 +4,8 @@
 
 https://docs.djangoproject.com/en/4.1/topics/http/sessions/
 https://apirobot.me/posts/tale-about-redis-and-sessions-in-django
+https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/ebextensions-optionsettings.html
+https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/create-deploy-python-django.html
 
 ## Setup environment
 ```
@@ -12,14 +14,14 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-## Redis (container)
+## Redis (local)
 ```
 docker network create my-net
 docker run -p 6379:6379 --net my-net --name my-redis -d redis:latest
 docker run -it --net my-net --rm redis redis-cli -h my-redis
 ```
 
-## Run Django
+## Run Django (local)
 ```
 # (local) run server
 python manage.py runserver
