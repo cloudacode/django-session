@@ -19,4 +19,4 @@ def index(request):
         color = random.choice(color_list)
         request.session['color'] = color
         return HttpResponse(color + " is set to session")
-    return HttpResponse(request.session['color'] + " from session via \"" + socket.gethostname() + "\"")
+    return HttpResponse(request.session['color'] + " from session \"" + socket.gethostname() + "\"")
