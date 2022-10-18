@@ -123,4 +123,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Session configurations
 SESSION_ENGINE = 'color_session.sessions.redis'
-SESSION_COOKIE_AGE = 60
+SESSION_COOKIE_AGE = 120
