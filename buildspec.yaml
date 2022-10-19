@@ -19,7 +19,6 @@ phases:
       - docker push $IMAGE_REPO_NAME:$TAG-$ARC
       - echo Writing image definitions file...
       - printf '{"AWSEBDockerrunVersion":"1","Image":{"Name":"%s"},"Ports":[{"ContainerPort":"8000"}]}' $IMAGE_REPO_NAME:$TAG-$ARC > Dockerrun.aws.json
-      - mkdir -p .ebextensions
       - |
         cat <<EOF > .ebextensions/environmentvariables.config
         option_settings:
@@ -32,4 +31,4 @@ phases:
 artifacts:
     files:
       - Dockerrun.aws.json
-      - .ebextensions/**/*
+      - .ebextensions/environmentvariables.config
