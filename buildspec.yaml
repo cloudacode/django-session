@@ -6,16 +6,29 @@ phases:
       - echo Logging in to Docker Hub...
       - docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PW
       - TAG="$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | head -c 8)"
+      - ARC="$(uname -m)"
   build:
     commands:
       - echo Build started on `date`
-      - echo Creating a new builder
-      - docker buildx create --name tmpbuilder
-      - docker buildx use tmpbuilder
       - echo Building the Docker image...
-      - docker buildx build --platform linux/amd64,linux/arm64 -t $IMAGE_REPO_NAME:$TAG .
+      - docker build -t $IMAGE_REPO_NAME:$TAG-$ARC .
   post_build:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker image...
-      - docker push $IMAGE_REPO_NAME:$TAG
+      - docker push $IMAGE_REPO_NAME:$TAG-$ARC
+      - echo Writing image definitions file...
+      - printf '{"AWSEBDockerrunVersion":"1","Image":{"Name":"%s"},"Ports":[{"ContainerPort":"8000"}]}' $IMAGE_REPO_NAME:$TAG-$ARC > Dockerrun.aws.json
+      - |
+        cat <<EOF > .ebextensions/environmentvariables.config
+        option_settings:
+          - option_name: REDIS_PORT
+            value: 6379
+          - option_name: REDIS_HOST
+            value: $REDIS_HOST
+        EOF
+
+artifacts:
+    files:
+      - Dockerrun.aws.json
+      - .ebextensions/environmentvariables.config
