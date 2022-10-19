@@ -8,7 +8,7 @@ import socket
 from http import cookies
 
 def index(request):
-    color_list = ['blue', 'red', 'white', 'purple', 'orange', 'brown', 'black', 'green', 'pink']
+    color_list = ['blue', 'red', 'white', 'purple', 'orange', 'brown', 'black', 'green', 'pink', 'indigo']
 
     # val = request.META['HTTP_COOKIE']
     # cookie_data = cookies.SimpleCookie()
