@@ -9,11 +9,8 @@ phases:
   build:
     commands:
       - echo Build started on `date`
-      - echo Creating a new builder
-      - docker buildx create --name tmpbuilder
-      - docker buildx use tmpbuilder
       - echo Building the Docker image...
-      - docker buildx build --platform linux/amd64,linux/arm64 -t $IMAGE_REPO_NAME:$TAG .
+      - docker build -t $IMAGE_REPO_NAME:$TAG .
   post_build:
     commands:
       - echo Build completed on `date`
