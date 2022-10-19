@@ -1,0 +1,27 @@
+version: 0.2
+# Based on the Docker documentation, must include the DOCKER_CLI_EXPERIMENTAL environment variable
+# https://docs.docker.com/engine/reference/commandline/manifest/
+
+phases:
+    install:
+        commands:
+            - yum update -y
+    pre_build:
+        commands:
+            - echo Logging in to Docker Hub...
+            - docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PW
+    build:
+        commands:
+            - echo Build started on `date`
+            - echo Building the Docker manifest...
+            - export DOCKER_CLI_EXPERIMENTAL=enabled
+            - docker manifest create $IMAGE_REPO_NAME:$TAG-arm64v8 $IMAGE_REPO_NAME:$TAG-amd64
+            - docker manifest annotate --arch arm64 $IMAGE_REPO_NAME:$TAG $IMAGE_REPO_NAME:$TAG-arm64v8
+            - docker manifest annotate --arch arm64 $IMAGE_REPO_NAME:$TAG $IMAGE_REPO_NAME:$TAG-amd64
+
+    post_build:
+        commands:
+            - echo Build completed on `date`
+            - echo Pushing the Docker image...
+            - docker manifest push $IMAGE_REPO_NAME
+            - docker manifest inspect $IMAGE_REPO_NAME
