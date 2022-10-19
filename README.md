@@ -12,6 +12,7 @@
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
+python manage.py migrate
 ```
 
 ## Redis (local)
@@ -40,4 +41,14 @@ eb init -p python-3.7 django-session
 
 # Deploy elasticbeanstalk
 eb create django-env -r ap-northeast-2 --vpc.id <vpc-id> --vpc.elbsubnets <subnet-01,subnet-02> --vpc.ec2subnets <subnet-01,subnet-02> --vpc.publicip --vpc.elbpublic
+```
+
+## Deploy Docker to ElasticBeanstalk
+
+```
+$ cd configuration/
+$ zip -r configuration.zip ./
+    adding: Dockerrun.aws.json (deflated 30%)
+    adding: .ebextensions/ (stored 0%)
+    adding: .ebextensions/environmentvariables.config (deflated 26%)
 ```
