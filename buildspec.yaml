@@ -6,13 +6,14 @@ phases:
       - echo Logging in to Docker Hub...
       - docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PW
       - TAG="$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | head -c 8)"
+      - ARC="$(uname -m)"
   build:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
-      - docker build -t $IMAGE_REPO_NAME:$TAG .
+      - docker build -t $IMAGE_REPO_NAME:$TAG-$ARC .
   post_build:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker image...
-      - docker push $IMAGE_REPO_NAME:$TAG
+      - docker push $IMAGE_REPO_NAME:$TAG-$ARC
