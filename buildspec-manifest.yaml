@@ -10,18 +10,17 @@ phases:
         commands:
             - echo Logging in to Docker Hub...
             - docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PW
+            - TAG="$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | head -c 8)"
     build:
         commands:
             - echo Build started on `date`
             - echo Building the Docker manifest...
             - export DOCKER_CLI_EXPERIMENTAL=enabled
-            - docker manifest create $IMAGE_REPO_NAME:$TAG-arm64v8 $IMAGE_REPO_NAME:$TAG-amd64
-            - docker manifest annotate --arch arm64 $IMAGE_REPO_NAME:$TAG $IMAGE_REPO_NAME:$TAG-arm64v8
-            - docker manifest annotate --arch arm64 $IMAGE_REPO_NAME:$TAG $IMAGE_REPO_NAME:$TAG-amd64
+            - docker manifest create $IMAGE_REPO_NAME:latest --amend $IMAGE_REPO_NAME:$TAG-aarch64 --amend $IMAGE_REPO_NAME:$TAG-x86_64
 
     post_build:
         commands:
             - echo Build completed on `date`
             - echo Pushing the Docker image...
-            - docker manifest push $IMAGE_REPO_NAME
+            - docker manifest push $IMAGE_REPO_NAME:latest
             - docker manifest inspect $IMAGE_REPO_NAME
