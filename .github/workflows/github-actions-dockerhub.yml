@@ -22,7 +22,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
         with:
-          images: cloudacode/django
+          images: cloudacode/django:${{ github.head_ref }}
 
       - name: install buildx
         id: buildx
@@ -33,5 +33,5 @@ jobs:
       - name: Build and push Docker image
         run: |
           docker buildx build \
-            --tag cloudacode/django:latest \
+            --tag cloudacode/django:${{ github.head_ref }} \
             --platform linux/amd64,linux/arm/v7,linux/arm64 --push .
