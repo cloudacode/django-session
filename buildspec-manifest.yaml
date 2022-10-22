@@ -3,9 +3,6 @@ version: 0.2
 # https://docs.docker.com/engine/reference/commandline/manifest/
 
 phases:
-    install:
-        commands:
-            - yum update -y
     pre_build:
         commands:
             - echo Logging in to Docker Hub...
@@ -16,11 +13,11 @@ phases:
             - echo Build started on `date`
             - echo Building the Docker manifest...
             - export DOCKER_CLI_EXPERIMENTAL=enabled
-            - docker manifest create $IMAGE_REPO_NAME:latest --amend $IMAGE_REPO_NAME:$TAG-aarch64 --amend $IMAGE_REPO_NAME:$TAG-x86_64
+            - docker manifest create $IMAGE_REPO_NAME:$TAG --amend $IMAGE_REPO_NAME:$TAG-aarch64 --amend $IMAGE_REPO_NAME:$TAG-x86_64
 
     post_build:
         commands:
             - echo Build completed on `date`
             - echo Pushing the Docker image...
-            - docker manifest push $IMAGE_REPO_NAME:latest
+            - docker manifest push $IMAGE_REPO_NAME:$TAG
             - docker manifest inspect $IMAGE_REPO_NAME
