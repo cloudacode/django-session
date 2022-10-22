@@ -52,3 +52,25 @@ $ zip -r configuration.zip ./
     adding: .ebextensions/ (stored 0%)
     adding: .ebextensions/environmentvariables.config (deflated 26%)
 ```
+
+## Trobuleshooting
+
+### Check redis connectivity
+```
+$ sudo yum update
+$ sudo yum install nc
+$ nc -vz $REDIS_HOST 6379
+    Ncat: Version 7.50 ( https://nmap.org/ncat )
+    Ncat: Connected to 10.0.2.73:6379.
+    Ncat: 0 bytes sent, 0 bytes received in 0.01 seconds.
+
+$ sudo amazon-linux-extras install redis6
+$ export REDIS_HOST=<redis hostname>
+$ redis-cli -h $REDIS_HOST
+```
+
+## ETC
+
+**Multi Architecture Container Images**
+- https://www.docker.com/blog/multi-arch-build-and-images-the-simple-way/
+- https://www.docker.com/blog/multi-arch-images/
