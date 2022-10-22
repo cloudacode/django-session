@@ -12,6 +12,14 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v2
 
+      - name: Set SHA Short
+        id: short_sha
+        run: |
+          echo "SHORT_SHA=$(git rev-parse --short ${{ github.event.pull_request.head.sha }})" >> $GITHUB_ENV
+
+      - name: Check SHA
+        run: echo ${{ env.SHORT_SHA }}
+
       - name: Log in to Docker Hub
         uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
         with:
@@ -22,7 +30,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
         with:
-          images: cloudacode/django
+          images: cloudacode/django:${{ env.SHORT_SHA }}
 
       - name: install buildx
         id: buildx
@@ -31,7 +39,7 @@ jobs:
           version: latest
 
       - name: Build and push Docker image
-      run: |
-        docker buildx build \
-          --tag cloudacode/django:latest \
-          --platform linux/amd64,linux/arm/v7,linux/arm64 --push .
+        run: |
+          docker buildx build \
+            --tag cloudacode/django:${{ env.SHORT_SHA }} \
+            --platform linux/amd64,linux/arm/v7,linux/arm64 --push .
