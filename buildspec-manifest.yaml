@@ -6,7 +6,7 @@ phases:
     pre_build:
         commands:
             - echo Logging in to Docker Hub...
-            - docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PW
+            - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
             - TAG="$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | head -c 8)"
     build:
         commands:
